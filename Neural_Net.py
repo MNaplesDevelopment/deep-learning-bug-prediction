@@ -34,7 +34,6 @@ def sigmoid(z):
 Arguments:
 X -- input dataset of shape (input size, number of examples)
 Y -- labels of shape (output size, number of examples)
-
 Returns:
 n_x -- the size of the input layer
 n_h -- the size of the hidden layer
@@ -49,7 +48,6 @@ def layer_sizes(X, Y):
 Arguments:
 X -- input dataset of shape (input size, number of examples)
 Y -- labels of shape (output size, number of examples)
-
 Returns:
 params -- python dictionary containing your parameters:
                 W1 -- weight matrix of shape (n_h, n_x)
@@ -57,10 +55,13 @@ params -- python dictionary containing your parameters:
                 W2 -- weight matrix of shape (n_y, n_h)
                 b2 -- bias vector of shape (n_y, 1) """
 def initialize_parameters(X, Y):
-
     n_x = np.shape(X)[0]
     n_h = 4
     n_y = np.shape(Y)[0]
+
+    print('Input layer size: ' + str(n_x))
+    print('Hidden layer size: ' + str(n_h))
+    print('Output layer size: ' + str(n_y))
 
     W1 = np.random.randn(n_h, n_x) * 0.01       #initalize weights randomly to avoid symmetry
     b1 = np.zeros((n_h, 1))
@@ -83,7 +84,6 @@ def initialize_parameters(X, Y):
 Argument:
 X -- input data of size (n_x, m)
 parameters -- python dictionary containing your parameters (output of initialization function)
-
 Returns:
 A2 -- The sigmoid output of the second activation
 cache -- a dictionary containing "Z1", "A1", "Z2" and "A2"  """
@@ -108,12 +108,10 @@ def forward_propagation(X, parameters):
 
 """
 Computes the cross-entropy cost given in equation (13)
-
 Arguments:
 A2 -- The sigmoid output of the second activation, of shape (1, number of examples)
 Y -- "true" labels vector of shape (1, number of examples)
 parameters -- python dictionary containing your parameters W1, b1, W2 and b2
-
 Returns:
 cost -- cross-entropy cost given equation (13)  """
 def compute_cost(A2, Y, parameters):
@@ -124,13 +122,11 @@ def compute_cost(A2, Y, parameters):
 
 """
 preform backward propagation
-
 Arguments:
 parameters -- python dictionary containing our parameters
 cache -- a dictionary containing "Z1", "A1", "Z2" and "A2".
 X -- input data of shape (2, number of examples)
 Y -- "true" labels vector of shape (1, number of examples)
-
 Returns:
 grads -- python dictionary containing your gradients with respect to different parameters   """
 def backward_propagation(parameters, cache, X, Y):
@@ -158,11 +154,9 @@ def backward_propagation(parameters, cache, X, Y):
 
 """
 Updates parameters using the gradient descent update rule given above
-
 Arguments:
 parameters -- python dictionary containing your parameters
 grads -- python dictionary containing your gradients
-
 Returns:
 parameters -- python dictionary containing your updated parameters  """
 def update_parameters(parameters, grads, learning_rate=1.2):
@@ -195,7 +189,6 @@ Y -- labels of shape (1, number of examples)
 n_h -- size of the hidden layer
 num_iterations -- Number of iterations in gradient descent loop
 print_cost -- if True, print the cost every 1000 iterations
-
 Returns:
 parameters -- parameters learnt by the model. They can then be used to predict. """
 def nn_model(X, Y, n_h, num_iterations=10000, print_cost=False):
@@ -222,11 +215,9 @@ def nn_model(X, Y, n_h, num_iterations=10000, print_cost=False):
 
 """
 Using the learned parameters, predicts a class for each example in X
-
 Arguments:
 parameters -- python dictionary containing your parameters
 X -- input data of size (n_x, m)
-
 Returns
 predictions -- vector of predictions of our model (red: 0 / blue: 1)    """
 def predict(parameters, X):
@@ -242,7 +233,14 @@ parameters = initialize_parameters(X, Y)
 A2, cache = forward_propagation(X, parameters)
 grads = backward_propagation(parameters, cache, X, Y)
 parameters = nn_model(X, Y, 4, num_iterations=2000, print_cost=True)
+
+
 predictions = predict(parameters, X)
-print ('Accuracy train data: %d' % float((np.dot(Y,predictions.T) + np.dot(1-Y,1-predictions.T))/float(Y.size)*100) + '%')
+print ('Accuracy train data: %d' % float((np.dot(Y,predictions.T)
+                                          + np.dot(1-Y,1-predictions.T))/float(Y.size)*100) + '%')
 predictions = predict(parameters, test_data)
-print ('Accuracy test data: %d' % float((np.dot(test_label,predictions.T) + np.dot(1-test_label,1-predictions.T))/float(test_label.size)*100) + '%')
+print ('Accuracy test data: %d' % float((np.dot(test_label,predictions.T)
+                                         + np.dot(1-test_label,1-predictions.T))/float(test_label.size)*100) + '%')
+predictions = predict(parameters, X[:,5].reshape(17, 1))
+print(predictions)
+
