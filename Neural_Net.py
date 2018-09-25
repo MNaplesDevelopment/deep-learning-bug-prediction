@@ -251,6 +251,4 @@ print ('Accuracy train data: %d' % float((np.dot(Y,predictions.T)
 predictions = predict(parameters, test_data)
 print ('Accuracy test data: %d' % float((np.dot(test_label,predictions.T)
                                          + np.dot(1-test_label,1-predictions.T))/float(test_label.size)*100) + '%')
-predictions = predict(parameters, X[:,5].reshape(17, 1))
-print(predictions)
 
