@@ -138,7 +138,7 @@ def backward_propagation(parameters, cache, X, Y):
     A1 = cache["A1"]
     A2 = cache["A2"]
 
-    dZ2 = A2 - Y
+    dZ2 = A2 - Y                                            #compute derivatives
     dW2 = dZ2.dot(A1.T) / m
     db2 = 1 / m * np.sum(dZ2, axis=1, keepdims=True)
     dZ1 = W2.T.dot(dZ2) * (1 - np.power(A1, 2))
