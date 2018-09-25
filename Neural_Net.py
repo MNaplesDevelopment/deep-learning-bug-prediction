@@ -6,6 +6,9 @@ Y = Y.reshape((1, np.shape(Y)[0]))
 Y = Y > 1.0
 X = X.T
 
+print(np.shape(X))      #X.shape == (# features, # training examples)
+print(np.shape(Y))      #Y.shape == (1, # training examples)
+
 test_data = np.genfromtxt('testdata.csv', delimiter=',')
 test_label = np.genfromtxt('testlabel.csv', delimiter=',')
 test_label = test_label.reshape((1, np.shape(test_label)[0]))
