@@ -12,6 +12,14 @@ test_label = test_label.reshape((1, np.shape(test_label)[0]))
 test_label = test_label > 1.0
 test_data = test_data.T
 
+#Normalize features
+mean = X.mean(axis=0)
+std = X.std(axis=0)
+train_data = (X - mean) / std
+test_mean = test_data.mean(axis=0)
+test_std = test_data.std(axis=0)
+test_data = (test_data - test_mean) / test_std
+
 #X = None            #assign to training set
 #Y = None            #assign to labels for X
 
@@ -33,7 +41,7 @@ n_h -- the size of the hidden layer
 n_y -- the size of the output layer """
 def layer_sizes(X, Y):
     n_x = np.shape(X)[0]
-    n_h = 16
+    n_h = 4
     n_y = np.shape(Y)[0]
     return n_x, n_h, n_y
 
@@ -233,7 +241,7 @@ def print_accuracy(parameters, X):
 parameters = initialize_parameters(X, Y)
 A2, cache = forward_propagation(X, parameters)
 grads = backward_propagation(parameters, cache, X, Y)
-parameters = nn_model(X, Y, 16, num_iterations=2000, print_cost=True)
+parameters = nn_model(X, Y, 4, num_iterations=2000, print_cost=True)
 predictions = predict(parameters, X)
 print ('Accuracy train data: %d' % float((np.dot(Y,predictions.T) + np.dot(1-Y,1-predictions.T))/float(Y.size)*100) + '%')
 predictions = predict(parameters, test_data)
