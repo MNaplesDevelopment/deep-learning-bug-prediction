@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 X = np.genfromtxt('traindata.csv', delimiter=',')
 Y = np.genfromtxt('trainlabel.csv', delimiter=',')
@@ -141,7 +142,7 @@ def backward_propagation(parameters, cache, X, Y):
     A1 = cache["A1"]
     A2 = cache["A2"]
 
-    dZ2 = A2 - Y                                            #compute derivatives
+    dZ2 = A2 - Y
     dW2 = dZ2.dot(A1.T) / m
     db2 = 1 / m * np.sum(dZ2, axis=1, keepdims=True)
     dZ1 = W2.T.dot(dZ2) * (1 - np.power(A1, 2))
@@ -204,6 +205,8 @@ def nn_model(X, Y, n_h, num_iterations=10000, print_cost=False):
     W2 = parameters["W2"]
     b2 = parameters["b2"]
 
+    costs = []
+
     for i in range(0, num_iterations):
         A2, cache = forward_propagation(X, parameters)
         cost = compute_cost(A2, Y, parameters)
@@ -213,8 +216,10 @@ def nn_model(X, Y, n_h, num_iterations=10000, print_cost=False):
         # Print the cost every 1000 iterations
         if print_cost and i % 1000 == 0:
             print("Cost after iteration %i: %f" % (i, cost))
+        if i % 50 == 0:
+            costs.append(cost)
 
-    return parameters
+    return parameters, costs
 
 """
 Using the learned parameters, predicts a class for each example in X
@@ -235,8 +240,10 @@ def print_accuracy(parameters, X):
 parameters = initialize_parameters(X, Y)
 A2, cache = forward_propagation(X, parameters)
 grads = backward_propagation(parameters, cache, X, Y)
-parameters = nn_model(X, Y, 4, num_iterations=2000, print_cost=True)
+parameters, costs = nn_model(X, Y, 4, num_iterations=2000, print_cost=True)
 
+plt.plot(costs)
+plt.show()
 
 predictions = predict(parameters, X)
 print ('Accuracy train data: %d' % float((np.dot(Y,predictions.T)
