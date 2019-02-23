@@ -1,4 +1,4 @@
-# deep-learning-bug-prediction
+# machine-learning-bug-prediction
 
 This is a very simple 3 layered nerual network written from scratch, most of the code was from assignments I worked on at https://deeplearning.ai I did however add L2 cost regularization which helps the model descend down the loss function and reach the global minimum without getting caught up in some of the ripples of the error plane by smoothing the plane out and making it more convex.
 
